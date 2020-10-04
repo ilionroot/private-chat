@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading img {
+  animation: loading 1.2s ease-out infinite;
+}
+
+@keyframes loading {
+  0%,
+  100% {
+    width: 40%;
+  }
+
+  50% {
+    width: 45%;
+  }
+}

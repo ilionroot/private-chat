@@ -1,0 +1,211 @@
+.chatContainer {
+  width: 90vw;
+  height: 95vh;
+  background-color: rgb(240, 239, 239);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.chatContainer .gayerMenu {
+  width: 90%;
+  height: 5%;
+  border-radius: 15px 15px 0 0;
+  animation: gayerBackground 30s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.chatContainer .controlsContainer {
+  width: 90%;
+  margin-top: 15px;
+}
+
+.chatContainer .controlsContainer form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatContainer .controlsContainer button {
+  font-family: "Ubuntu", sans-serif;
+  background-color: rgba(255, 255, 255, 1);
+  color: white;
+  border-radius: 5px;
+  padding: 15px;
+  width: 13.5%;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  margin-left: 2vw;
+}
+
+.chatContainer .controlsContainer button:focus {
+  animation: gayerBorder 30s ease infinite;
+}
+
+.chatContainer .controlsContainer button svg {
+  width: 50px;
+  animation: gayerColors 30s ease infinite;
+}
+
+.chatContainer .controlsContainer input[type="text"] {
+  font-family: "Ubuntu", sans-serif;
+  height: 45px;
+  width: 86.5%;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.chatContainer .controlsContainer input[type="text"]:focus {
+  animation: gayerBorder 30s ease infinite;
+}
+
+.chatContainer .controlsContainer label {
+  width: 13.5%;
+  height: 45px;
+  background-color: rgba(255, 255, 255, 1);
+  color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  margin-right: 2vw;
+}
+
+.chatContainer .controlsContainer label svg {
+  width: 50%;
+  height: auto;
+  animation: gayerColors 30s ease infinite;
+}
+
+.chatContainer .messagesContainer {
+  width: 90%;
+  height: 80%;
+  background-color: whitesmoke;
+  border-radius: 0 0 15px 15px;
+  padding: 15px;
+  overflow: hidden auto;
+}
+
+@media screen and (min-width: 768px) {
+  .chatContainer {
+    width: 95vw;
+    height: 95vh;
+  }
+
+  .chatContainer .controlsContainer button {
+    width: 4%;
+    margin-left: 0.6vw;
+  }
+
+  .chatContainer .controlsContainer input[type="text"] {
+    width: 90%;
+  }
+
+  .chatContainer .messagesContainer {
+    height: 75%;
+  }
+
+  .chatContainer .controlsContainer label {
+    width: 4%;
+    margin-right: 0.6vw;
+  }
+
+  .chatContainer .controlsContainer label svg {
+    width: 60%;
+  }
+}
+
+@keyframes gayerColors {
+  0%,
+  100% {
+    fill: green;
+    color: white;
+  }
+
+  25% {
+    fill: purple;
+    color: white;
+  }
+
+  50% {
+    fill: orange;
+    color: black;
+  }
+
+  75% {
+    fill: pink;
+    color: black;
+  }
+}
+
+@keyframes gayerBorder {
+  0%,
+  100% {
+    border: green 2.5px solid;
+  }
+
+  25% {
+    border: purple 2.5px solid;
+  }
+
+  50% {
+    border: orange 2.5px solid;
+  }
+
+  75% {
+    border: pink 2.5px solid;
+  }
+}
+
+@keyframes gayerBackground {
+  0%,
+  100% {
+    background: rgba(0, 128, 0, 0.5);
+  }
+
+  25% {
+    background: rgba(128, 0, 128, 0.5);
+  }
+
+  50% {
+    background: rgba(255, 165, 0, 0.5);
+  }
+
+  75% {
+    background: rgba(255, 192, 203, 0.5);
+  }
+}
+
+@keyframes gayerBackgroundForMessage {
+  0%,
+  100% {
+    background: rgba(0, 128, 0, 0.5);
+    color: white;
+  }
+
+  25% {
+    background: rgba(128, 0, 128, 0.5);
+    color: white;
+  }
+
+  50% {
+    background: rgba(255, 165, 0, 0.5);
+    color: black;
+  }
+
+  75% {
+    background: rgba(255, 192, 203, 0.5);
+    color: black;
+  }
+}
