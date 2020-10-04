@@ -15,7 +15,7 @@ socket.on("connect", () => {
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  // const [recording, setRecording] = useState(false);
+  const [recording, setRecording] = useState(false);
   const [author, setAuthor] = useState("");
 
   socket.on("someoneWalk", (msg) => {
@@ -109,9 +109,11 @@ const Chat = () => {
         };
 
         if (!recording) {
+          setRecording(true);
           return mediaRecorder.start();
         }
 
+        setRecording(false);
         mediaRecorder.stop();
       });
   };
