@@ -16,7 +16,7 @@ const Message = ({ author, message, id }) => {
           case "data:audio":
             return (
               <audio className="audio" controls>
-                <source src={message} type="audio/ogg" />
+                <source src={message} type="audio/mp3" />
               </audio>
             );
 
