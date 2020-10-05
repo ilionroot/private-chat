@@ -103,7 +103,7 @@ const Chat = () => {
             buffer.push(data.data);
           };
           mediaRecorder.onstop = () => {
-            const blob = new Blob(buffer, { type: "audio/mp3;" });
+            const blob = new Blob(buffer, { type: "audio/ogg;code=opus" });
             const reader = new FileReader();
             reader.onloadend = () => {
               socket.emit("sendMessage", {
