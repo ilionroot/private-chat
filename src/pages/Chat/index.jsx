@@ -7,7 +7,9 @@ import Container from "../../components/Container/";
 
 import "./index.css";
 
-const socket = io("http://192.168.0.105:5000", { secure: true });
+const socket = io("https://agitated-archimedes-b3f3aa.netlify.app", {
+  secure: true,
+});
 socket.on("connect", () => {
   console.log("Conectado!");
 });
