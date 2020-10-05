@@ -6,11 +6,24 @@ const Message = ({ author, message, id }) => {
   return (
     <div id={id} className="message">
       <h4>{author}:</h4>
-      {message.split(":")[0] === "data" ? (
-        <img className="image" src={message} alt={`Sent by: ${author}`} />
-      ) : (
-        <p>{message}</p>
-      )}
+      {(() => {
+        switch (message.substring(0, 10)) {
+          case "data:image":
+            return (
+              <img className="image" src={message} alt={`Sent by: ${author}`} />
+            );
+
+          case "data:audio":
+            return (
+              <audio className="audio" controls>
+                <source src={message} type="audio/mp3" />
+              </audio>
+            );
+
+          default:
+            return <p>{message}</p>;
+        }
+      })()}
     </div>
   );
 };

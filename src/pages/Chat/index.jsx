@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import $ from "jquery";
 import io from "socket.io-client";
 
@@ -15,7 +15,7 @@ socket.on("connect", () => {
 const Chat = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [recording, setRecording] = useState(false);
+  const recording = useRef(false);
   const [author, setAuthor] = useState("");
 
   socket.on("someoneWalk", (msg) => {
@@ -37,7 +37,7 @@ const Chat = () => {
     if (file) {
       let reader = new FileReader();
       reader.onload = (e) => {
-        socket.emit("sendImage", {
+        socket.emit("sendMessage", {
           author,
           message: e.target.result,
         });
@@ -82,40 +82,61 @@ const Chat = () => {
     }
   };
 
-  const recordAudio = () => {
-    let mediaRecorder;
+  let mediaRecorder;
 
+  const recordAudio = () => {
     navigator.getUserMedia =
       navigator.getUserMedia ||
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia;
 
-    navigator.mediaDevices
-      .getUserMedia({ audio: true, video: false })
-      .then((stream) => {
-        mediaRecorder = new MediaRecorder(stream);
-        let buffer = [];
-        mediaRecorder.ondataavailable = ({ data }) => {
-          buffer.push(data);
-        };
-        mediaRecorder.onstop = () => {
-          const blob = new Blob(buffer, { type: "audio/ogg; code=opus" });
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            console.log(reader.result);
+    if (!recording.current) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true, video: false })
+        .then((stream) => {
+          mediaRecorder = new MediaRecorder(stream);
+          let buffer = [];
+          mediaRecorder.ondataavailable = (data) => {
+            buffer.push(data.data);
           };
-          reader.readAsDataURL(blob);
-        };
+          mediaRecorder.onstop = () => {
+            const blob = new Blob(buffer, { type: "audio/mp3;" });
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              socket.emit("sendMessage", {
+                author,
+                message: reader.result,
+              });
+              setMessages([
+                ...messages,
+                {
+                  id: messages.length,
+                  author,
+                  message: reader.result,
+                },
+              ]);
+              $(".messagesContainer")
+                .stop()
+                .animate(
+                  { scrollTop: $(".messagesContainer")[0].scrollHeight },
+                  1000
+                );
+            };
+            reader.readAsDataURL(blob);
+          };
 
-        if (!recording) {
-          setRecording(true);
-          return mediaRecorder.start();
-        }
-
-        setRecording(false);
-        mediaRecorder.stop();
-      });
+          mediaRecorder.start();
+          recording.current = true;
+          $("#recordAudio svg").css("animation", "recording 1s ease infinite");
+          $("#recordAudio svg").css("fill", "red");
+        })
+        .catch((err) => console.log("Erro: " + err));
+    } else {
+      mediaRecorder.stop();
+      recording.current = false;
+      $("#recordAudio svg").css("animation", "gayerColors 30s ease infinite");
+    }
   };
 
   useEffect(() => {
@@ -211,7 +232,7 @@ const Chat = () => {
               onChange={(e) => setMessage(e.target.value)}
               value={message}
             />
-            <button type="button" onClick={recordAudio}>
+            <button id="recordAudio" type="button" onClick={recordAudio}>
               <svg
                 version="1.1"
                 id="Capa_1"
