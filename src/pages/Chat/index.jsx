@@ -7,7 +7,7 @@ import Container from "../../components/Container/";
 
 import "./index.css";
 
-const socket = io("https://agitated-archimedes-b3f3aa.netlify.app", {
+const socket = io("https://private-chat-backend.herokuapp.com", {
   secure: true,
 });
 socket.on("connect", () => {
